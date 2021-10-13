@@ -1,0 +1,189 @@
+swagger: "2.0"
+info:
+  description: "This Student Management System UI for Assestment Task By WanClouds."
+  version: "1.0.0"
+  title: "SMS By GOlang"
+  contact:
+    email: "abdulmueez@wanclouds.net"
+host: "sms.swagger.io"
+basePath: "/v1"
+tags:
+  - name: "Teacher"
+    description: ""
+  - name: "Student"
+schemes:
+  - "http"
+paths:
+  /Teacher/create:
+    post:
+      tags:
+        - "Teacher"
+      summary: "Create new account for teacher"
+      description: "Create a new account for the teacher"
+      operationId: "createteacher"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Created teacher account"
+          required: true
+          schema:
+            $ref: "#/definitions/teacher"
+      responses:
+        default:
+          description: "successful operation"
+  /Teacher/login/{email}/{password}:
+    get:
+      tags:
+        - "Teacher"
+      summary: "Teacher login into the portal"
+      description: ""
+      operationId: "loginUser"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "email"
+          in: "path"
+          description: "teacher email for login"
+          required: true
+          type: "string"
+        - name: "password"
+          in: "path"
+          description: "teacher password for login"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid email/password supplied"
+  /Student/newstudent/add:
+    post:
+      tags:
+        - "Student"
+      summary: "Add student recoard"
+      operationId: "createstudent"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Created student recoard"
+          required: true
+          schema:
+            $ref: "#/definitions/student"
+      responses:
+        "400":
+          description: "Invalid email exisit"
+        default:
+          description: "successful operation"
+  /Student/getrecoard/{email}:
+    get:
+      tags:
+        - "Student"
+      summary: "Get student recoard"
+      operationId: "getstudentByName"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "email"
+          in: "path"
+          description: "The email that needs to be fetched student record "
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/student"
+        "400":
+          description: "Invalid email supplied"
+        "404":
+          description: "email not found"
+  /Student/deleterecoard/{email}:
+    delete:
+      tags:
+        - "Student"
+      summary: "Delete student recoard"
+      operationId: "deletestudent"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "email"
+          in: "path"
+          description: "email of student that needs to delete the recoard"
+          required: true
+          type: "string"
+      responses:
+        "400":
+          description: "Invalid email supplied"
+        "404":
+          description: "email not found"
+  /Student/updaterecoard/{email}:
+    put:
+      tags:
+        - "Student"
+      summary: "Updated student recoard"
+      description: "Enter the valid email to update the student recoard"
+      operationId: "updatestudent"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "email"
+          in: "path"
+          description: "email of student that needs to update the recoard"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Updated student record"
+          required: true
+          schema:
+            $ref: "#/definitions/student"
+      responses:
+        "400":
+          description: "Invalid email supplied"
+        "404":
+          description: "emai not found"
+definitions:
+  teacher:
+    type: "object"
+    required:
+      - "name"
+      - "email"
+      - "password"
+    properties:
+      name:
+        type: "string"
+        example: "Mueez Khan"
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+        format: "password"
+  student:
+    type: "object"
+    required:
+      - "email"
+    properties:
+      name:
+        type: "string"
+        example: "Mueez Khan"
+      email:
+        type: "string"
+        format: "email"
+        example: "abdulmueez@wanclouds.net"
+      class:
+        type: "string"
+        example: "BSCS"
+      age:
+        type: "string"
+        example: "25"
+      city:
+        type: "string"
+        example: "Bahawalpur"
+      subject:
+        type: "string"
+        example: "Golang"
